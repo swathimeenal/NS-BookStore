@@ -22,7 +22,7 @@
   
   .book-card  .book-image {
     width: 100%;
-    height: 200px;
+    height: 250px;
     object-fit: cover;
   }
   
@@ -42,7 +42,7 @@
     background-color: #3498db;
     color: #fff;
     border: none;
-    padding: 8px 12px;
+    padding: 5px 12px;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
