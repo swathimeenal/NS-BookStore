@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className='hero'>
         <div className="hero-content">
-            <h1 className='hero-text'>NS Book Shop</h1>
+            <h1 className='hero-text'>NS Book Store</h1>
             <p className='hero-description'>
                 Browse the collection of our best top interesting books. You will definitely find what you are lopking for.
             </p>
