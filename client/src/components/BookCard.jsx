@@ -9,37 +9,23 @@ const BookCard = ({book, role}) => {
     const navigate = useNavigate()
     
     
-    const handleReadClick = (e) =>{
+    const handleReadClick = async (e) =>{
       e.preventDefault()
-      axios.post(`http://localhost:3001/book/fetch`,{name, author, imageUrl,contentUrl})
-      async function fetchData() {
-        const apiUrl = contentUrl;
       try{
-        const response = await fetch(`${apiUrl}`);
-      
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-        const data = await response.json();
-
-        if (response.data.fetch)
-        {
-          navigate('/apiUrl')
-        }
-        else 
-        {
-        console.log(res)
-        }
-      } 
-      catch (error)
-       {
-        console.error('Error fetching data:', error);
-        document.getElementById('result').innerText = 'Error fetching data. Please try again later.';
+        const axiosResponse =await axios.post(`http://localhost:3001/book/fetch`,{name, author, imageUrl,contentUrl})
+     if(axiosResponse.data.fetch)
+     {
+      navigate('/contentUrl');
+     }
+     else{
+      console.log(axiosResponse.data);
+     }
+      }catch(error){
+        console.error('Error with axios:', error);
+        document.getElementById('result').innerText='Error with axios. Please try again later.';
       }
-      
-    }
-  }
+       
+  };
   return (
     <div className='book-card'>
         <img src={imageUrl} alt={name} className='book-image'/>
