@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const bookSchema = new mongoose.Schema({
-    name: {type: String},
+    name: {type: String, required: true},
     author: {type: String, required: true},
     imageUrl: {type: String, required: true},
-    contentUrl: {type: String, required: true}
+    pdfPath: {type: String}
 })
 
 const bookModel = mongoose.model('Book', bookSchema)

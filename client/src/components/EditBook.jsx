@@ -6,7 +6,7 @@ const EditBook = () => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState('')
     const [imageUrl, setImageUrl] = useState('')
-    const [contentUrl, setContentUrl] = useState('')
+    const [pdfFile, setPdfFile] = useState('')
     const navigate = useNavigate()
     const {id} = useParams()
 
@@ -16,13 +16,14 @@ const EditBook = () => {
             setName(res.data.name)
             setAuthor(res.data.author)
             setImageUrl(res.data.imageUrl)
+            setPdfFile(res.data.pdfFile)
         })
         .catch(err => console.log(err))
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:3001/book/book/'+id, {name, author, imageUrl, contentUrl})
+        axios.put('http://localhost:3001/book/book/'+id, {name, author, imageUrl, pdfFile})
         .then(res => { 
             if(res.data.updated) {
                 navigate('/books')
@@ -54,9 +55,9 @@ const EditBook = () => {
           onChange={(e) => setImageUrl(e.target.value)}/>
         </div>
         <div className="form-group">
-                <label htmlFor="content">Content URL:</label>
-                <input type="text" id="content" name="content" 
-                onChange={(e) => setContentUrl(e.target.value)} />
+                <label htmlFor="file">Content:</label>
+                <input type="file" id="form-control" accept="application/pdf"
+                onChange={(e) => setPdfFile(e.target.value)} />
             </div>
         <button type="submit">Update </button>
       </form>

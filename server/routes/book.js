@@ -1,23 +1,43 @@
 import express from 'express'
+
 import { Book } from '../models/Book.js';
 const router = express.Router();
 import { verifyAdmin } from './auth.js';
 
+
+
+
 router.post('/add',verifyAdmin, async (req, res) => {
+   
     try {
-        const {name, author, imageUrl,contentUrl} = req.body;
-        const newbook = new Book({
+        const {name, author, imageUrl, pdfPath} = req.body;
+        const newbook =  await Book.create({
             name,
             author,
             imageUrl,
-            contentUrl
-        })
-        await newbook.save()
-        return res.json({added: true})
-    } catch(err) {
-        return res.json({message: "Error in adding book"})
+            pdfPath
+        });
+        res.status(201).json("newBook");
+       
+    } catch(error) {
+        console.log(error)
+         res.status(400).json({message: "Error in adding book"})
     }
 })
+
+// Get All books
+router.get('/',async(req, res)=> {
+    try{
+        const books= await Book.find();
+        res.json(books);
+    }catch(error){
+        res.status(500).json({message:error.message})
+    }
+});
+
+
+
+
 
 router.get('/books', async (req, res) => {
     try {

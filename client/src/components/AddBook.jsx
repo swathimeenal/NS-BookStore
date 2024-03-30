@@ -1,27 +1,31 @@
-import React,{ useState }from 'react'
-import axios from 'axios'
+import React,{ useState  }from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-const AddBook=() => {
+const AddBook=({ onAddBook}) => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState('')
    const [imageUrl, setImageUrl] = useState('')
-   const [contentUrl, setContentUrl] = useState('')
+   const [pdfFile, setPdfFile] = useState('')
    
    const navigate = useNavigate()
 
    const handleSubmit = (e)=>{
     e.preventDefault()
-    axios.post(`http://localhost:3001/book/add`,{name, author, imageUrl,contentUrl})
-    .then( res => {
-     if(res.data.added)
-     {
-       navigate('/books')
-     }
-     console.log(res)
-    })
+    axios.post('http://localhost:3001/book/add', {name, author, imageUrl, pdfFile})
+    .then(res => { 
+        if(res.data.added) {
+            navigate('/books')
+        }
+        else {
+            console.log(res)
+        }
+
+    } )
     .catch(err => console.log(err))
    }
+
+
   return (
     <div className="student-form-container">
         <form className='student-form' onSubmit={handleSubmit}>
@@ -43,9 +47,9 @@ const AddBook=() => {
                 onChange={(e) => setImageUrl(e.target.value)} />
             </div>
             <div className="form-group">
-                <label htmlFor="content">Content URL:</label>
-                <input type="text" id="content" name="content" 
-                onChange={(e) => setContentUrl(e.target.value)} />
+                <label htmlFor="file">Content:</label>
+                <input type="file" id="form-control" accept="application/pdf"
+                onChange={(e) => setPdfFile(e.target.value)} />
             </div>
             <button type="submit">Add</button>
         </form>
