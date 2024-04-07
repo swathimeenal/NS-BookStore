@@ -55,8 +55,8 @@ const EditBook = () => {
           onChange={(e) => setImageUrl(e.target.value)}/>
         </div>
         <div className="form-group">
-                <label htmlFor="file">Content:</label>
-                <input type="file" id="form-control" accept="application/pdf"
+             <label htmlFor="file">Content:</label>
+             <input type="file" id="form-control" accept="application/pdf"
                 onChange={(e) => setPdfFile(e.target.value)} />
             </div>
         <button type="submit">Update </button>

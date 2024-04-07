@@ -4,8 +4,8 @@ const bookSchema = new mongoose.Schema({
     name: {type: String, required: true},
     author: {type: String, required: true},
     imageUrl: {type: String, required: true},
-    pdfPath: {type: String}
+    pdfFile: {type: String, required: true}
 })
 
 const bookModel = mongoose.model('Book', bookSchema)
-export {bookModel as Book}
+export {bookModel as Book } 

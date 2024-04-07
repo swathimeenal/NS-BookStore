@@ -1,25 +1,33 @@
 import React  from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
-
-    const BookCard = ({book, role})=>{
+ const BookCard =({book, role})=>{
+  
         const {name, author, imageUrl, pdfFile} = book;
+
+        const handleButtonclick = (pdfFile)=>
+        {
+      
+
+        }
        
   return (
-    <div class="container">
-    <div class="col mb-5">
-   <div class="card h-100">
+    <div className="container">
+    <div className="col mb-5">
+   <div className="card h-100">
    <div className="badge bg-dark text-white position-absolute" style={{top:"0.5rem", right:"0.5rem"}}></div>
    <img src={imageUrl} class="card-img-top" alt={name}/>
   
     <div class="card-body p-4">
-            <h3 class="text-center">{name}</h3>
-            <p class="fw-bolder">{author}</p>
+            <h3 className="text-center">{name}</h3>
+            <p className="fw-bolder">{author}</p>
             <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
     <div className="text-center"></div>
             {role === "student" &&
         <div className="book-actions">
-            <button  className="btn btn-outline-dark mt-auto" onClick={()=> openPdf(book.pdfFile)} >Read </button>
+            <button  className="btn btn-outline-dark mt-auto" onClick={handleButtonclick} >Read </button>
+            
             </div>}
         </div>
         {role === "admin" &&

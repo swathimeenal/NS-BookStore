@@ -2,7 +2,7 @@ import React,{ useState  }from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-const AddBook=({ onAddBook}) => {
+const AddBook=({ }) => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState('')
    const [imageUrl, setImageUrl] = useState('')
@@ -21,10 +21,11 @@ const AddBook=({ onAddBook}) => {
             console.log(res)
         }
 
-    } )
+    })
     .catch(err => console.log(err))
    }
 
+   
 
   return (
     <div className="student-form-container">
@@ -48,7 +49,7 @@ const AddBook=({ onAddBook}) => {
             </div>
             <div className="form-group">
                 <label htmlFor="file">Content:</label>
-                <input type="file" id="form-control" accept="application/pdf"
+                <input type="file" id="form-control" accept="application/pdf" required
                 onChange={(e) => setPdfFile(e.target.value)} />
             </div>
             <button type="submit">Add</button>
