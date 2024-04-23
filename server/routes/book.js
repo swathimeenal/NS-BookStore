@@ -2,58 +2,39 @@ import express from 'express'
 import multer from 'multer'
 import {Book} from '../models/Book.js';
 const router = express.Router();
+import cors from "cors"
 import { verifyAdmin } from './auth.js';
 
+router.use(express.json());
+// MiddleWare for CORS
+router.use(cors());
+// Create a Storage for Uploads
+ const storage = multer.diskStorage({
+    destination : function (req, file, cb)
+    {
+       cb( null, '/uploads/');// uploads will be stored in the 'upload/' directory
+    },
+    filename: function(req, file,cb)
+    {
+    cb(null, Date.now() + '-' + file.originalname);
+    },
+});
+// to create upload function
+const upload = multer({ storage: storage});
 
-const app = express();
-app.use(express.json());
-app.use("/uploads",express.static("files"))
-
-
-router.post('/add',verifyAdmin, async (req, res) => {
+// Route for Handling file uploads
+router.post('/add',upload.single("file"), verifyAdmin, async (req, res) =>{
    
-    try {
-        const {name, author, imageUrl, pdfFile} = req.body;
-        const storage = multer.diskStorage({
-            destination : function (req, file, cb)
-            {
-               cb( null, '../uploads');// uploads will be stored in the 'upload/' directory
-            },
-            filename: function(req, file,cb)
-            {
-            cb(null, Date.now() + '-' + file.originalname);
-            }
-      })
-
+ try {
+        const { name, author, imageUrl, pdfFile}  = req.body;
         const newbook =  await Book.create({
             name,
             author,
             imageUrl,
-            pdfFile  
-         } );
-           // Initilise multer upload middleware
-           const upload = multer({ storage: storage,
-            limits:{ filesize : 1000000}}).fields([{name: 'pdf', maxCount:1}]);
-            // Route for file upload
-            app.post ("/upload", upload.single("file"),async(req,res)=>{
-                console.log(req.file);
-                upload(req,res, (err) => {
-                    console.log(req.file);
-                    res.send("hi")
-                    if(err){
-                      console.error(err);
-                      res.status(500).send('Error uploading files');
-                    }
-                    else{
-                        res.send('Files uploaded')
-                    }
-                })
-                console.log(req.file);
-             res.send('File Uploaded Successfully'); // access uploaded file via req.file
-            });
-       
-       
+            pdfFile }) 
+        
 
+         console.log(req.file);
         await newbook.save()
         res.status(201).json("newBook");
        
@@ -74,9 +55,6 @@ router.get('/books',async(req, res)=> {
 });
 
 
-
-
-
 router.get('/books', async (req, res) => {
     try {
         const books = await Book.find()
@@ -95,6 +73,7 @@ router.get('/book/:id', async (req, res) => {
         return res.json(err)
     }
 })
+
 router.put('/book/:id', async (req, res) => {
     try {
         const id = req.params.id;

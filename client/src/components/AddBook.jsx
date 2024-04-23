@@ -1,30 +1,41 @@
 import React,{ useState  }from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 
 const AddBook=({ }) => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState('')
    const [imageUrl, setImageUrl] = useState('')
-   const [pdfFile, setPdfFile] = useState('')
+   const [pdfFile, setPdfFile] = useState([ ]);
    
-   const navigate = useNavigate()
+   const navigate = useNavigate();
 
+   // upload api
    const handleSubmit = (e)=>{
     e.preventDefault()
-    axios.post('http://localhost:3001/book/add', {name, author, imageUrl, pdfFile})
+    const formData =  new FormData();
+    formData.append('name',name);
+    formData.append('author',author);
+    formData.append('image',imageUrl);
+    formData.append("pdf",pdfFile);
+    console.log(formData);
+    axios.post('http://localhost:3001/book/add',formData)
     .then(res => { 
-        if(res.data.added) {
-            navigate('/books')
+        if(res.status === 400) {
+           toast.error("Please upload a file")  
         }
-        else {
-            console.log(res)
-        }
+        toast.success(res.data.message);
+       setTimeout(()=>{
+           navigate('/books')
+        },1000);
 
     })
-    .catch(err => console.log(err))
+    .catch(()=>{
+        toast.error("Can't Upload");
+   })
    }
-
    
 
   return (
@@ -50,10 +61,12 @@ const AddBook=({ }) => {
             <div className="form-group">
                 <label htmlFor="file">Content:</label>
                 <input type="file" id="form-control" accept="application/pdf" required
-                onChange={(e) => setPdfFile(e.target.value)} />
+                onChange={(e) => setPdfFile(e.target.files[0])} />
             </div>
             <button type="submit">Add</button>
+            
         </form>
+        <ToastContainer />
     </div>
   )
 }

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import  {useNavigate, useParams} from 'react-router-dom'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditBook = () => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState('')
     const [imageUrl, setImageUrl] = useState('')
-    const [pdfFile, setPdfFile] = useState('')
+    const [pdfFile, setPdfFile] = useState([ ])
+    
     const navigate = useNavigate()
     const {id} = useParams()
 
@@ -29,10 +32,10 @@ const EditBook = () => {
                 navigate('/books')
             }
             else {
-                console.log(res)
+              toast.error("error")
             }
         })
-        .catch(err => console.log(err))
+        .catch(err =>toast.error("Can't get Updated"))
       }
 
   return (
@@ -57,7 +60,7 @@ const EditBook = () => {
         <div className="form-group">
              <label htmlFor="file">Content:</label>
              <input type="file" id="form-control" accept="application/pdf"
-                onChange={(e) => setPdfFile(e.target.value)} />
+                onChange={(e) => setPdfFile(e.target.files[0])} />
             </div>
         <button type="submit">Update </button>
       </form>
