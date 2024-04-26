@@ -6,11 +6,7 @@ import axios from 'axios';
   
         const {name, author, imageUrl, pdfFile} = book;
 
-        const handleButtonclick = (pdfFile)=>
-        {
-      
-
-        }
+        
        
   return (
     <div className="container">
@@ -26,7 +22,7 @@ import axios from 'axios';
     <div className="text-center"></div>
             {role === "student" &&
         <div className="book-actions">
-            <button  className="btn btn-outline-dark mt-auto" onClick={handleButtonclick} >Read </button>
+            <button  className="btn btn-outline-dark mt-auto"  >Read </button>
             
             </div>}
         </div>

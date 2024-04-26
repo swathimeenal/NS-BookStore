@@ -5,43 +5,30 @@ const router = express.Router();
 import cors from "cors"
 import { verifyAdmin } from './auth.js';
 
-router.use(express.json());
-// MiddleWare for CORS
-router.use(cors());
-// Create a Storage for Uploads
- const storage = multer.diskStorage({
-    destination : function (req, file, cb)
-    {
-       cb( null, '/uploads/');// uploads will be stored in the 'upload/' directory
+// multer setup
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '/client/src/uploads')
     },
-    filename: function(req, file,cb)
-    {
-    cb(null, Date.now() + '-' + file.originalname);
-    },
-});
-// to create upload function
-const upload = multer({ storage: storage});
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  })
+  
+  const upload = multer({ storage: storage })
 
 // Route for Handling file uploads
-router.post('/add',upload.single("file"), verifyAdmin, async (req, res) =>{
-   
- try {
-        const { name, author, imageUrl, pdfFile}  = req.body;
-        const newbook =  await Book.create({
-            name,
-            author,
-            imageUrl,
-            pdfFile }) 
-        
-
-         console.log(req.file);
-        await newbook.save()
-        res.status(201).json("newBook");
-       
-    } catch(error) {
-        console.log(error)
-         res.status(400).json({message: "Error in adding book"})
+router.post('/book/add',upload.single("file"), verifyAdmin, async (req, res) =>{
+    if (req.file)
+    {
+        res.json({ message:"file uploaded successful "})
     }
+    else{
+        res.json({ message:"error in file uploading "})
+    }
+    
+ 
 })
 
 // Get All books

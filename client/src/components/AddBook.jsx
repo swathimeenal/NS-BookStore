@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 
 const AddBook=({ }) => {
-    const [name, setName] = useState('')
-    const [author, setAuthor] = useState('')
+   const [name, setName] = useState('')
+   const [author, setAuthor] = useState('')
    const [imageUrl, setImageUrl] = useState('')
    const [pdfFile, setPdfFile] = useState([ ]);
    
@@ -16,6 +16,7 @@ const AddBook=({ }) => {
    const handleSubmit = (e)=>{
     e.preventDefault()
     const formData =  new FormData();
+    
     formData.append('name',name);
     formData.append('author',author);
     formData.append('image',imageUrl);
@@ -30,14 +31,11 @@ const AddBook=({ }) => {
        setTimeout(()=>{
            navigate('/books')
         },1000);
-
     })
     .catch(()=>{
         toast.error("Can't Upload");
    })
    }
-   
-
   return (
     <div className="student-form-container">
         <form className='student-form' onSubmit={handleSubmit}>
