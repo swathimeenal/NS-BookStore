@@ -13,16 +13,19 @@ const AddBook=({ }) => {
    const navigate = useNavigate();
 
    // upload api
-   const handleSubmit = (e)=>{
+   const handleSubmit = async (e)=>{
     e.preventDefault()
     const formData =  new FormData();
-    
     formData.append('name',name);
     formData.append('author',author);
     formData.append('image',imageUrl);
-    formData.append("pdf",pdfFile);
+    formData.append("file",pdfFile);
     console.log(formData);
-    axios.post('http://localhost:3001/book/add',formData)
+    const res = await axios.post('http://localhost:3001/book/add',formData,
+    {
+        headers:{"Content-Type": "multipart/form-data"},
+    })
+    console.log(res)
     .then(res => { 
         if(res.status === 400) {
            toast.error("Please upload a file")  

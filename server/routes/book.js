@@ -1,6 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import {Book} from '../models/Book.js';
+import mongoose from "mongoose";
 const router = express.Router();
 import cors from "cors"
 import { verifyAdmin } from './auth.js';
@@ -8,25 +9,36 @@ import { verifyAdmin } from './auth.js';
 // multer setup
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '/client/src/uploads')
+      cb(null, '/Users/nagarajanrajan/Desktop/Capstone Project/NS BookStore/client/src/uploads')
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       cb(null, file.fieldname + '-' + uniqueSuffix)
     }
   })
-  
+  const PdfSchema = mongoose.model("Book");
   const upload = multer({ storage: storage })
 
 // Route for Handling file uploads
-router.post('/book/add',upload.single("file"), verifyAdmin, async (req, res) =>{
-    if (req.file)
-    {
-        res.json({ message:"file uploaded successful "})
+router.post('/add',upload.single("file"), verifyAdmin, async (req, res) =>{
+    console.log(req.file)
+    const name = req.body.name;
+    const author = req.body.author;
+    const imageUrl = req.body.image;
+    const pdfFile = req.file.filename;
+    try{
+        await PdfSchema.create({ name: name, author: author,imageUrl: imageUrl , pdfFile: pdfFile });
+        res.send({status: "ok"});
+    } catch (error) {
+        res.json({status:error})
     }
-    else{
-        res.json({ message:"error in file uploading "})
-    }
+   // if (req.file)
+  //  {
+ //       res.json({ message:"file uploaded successful "})
+  // }
+  //  else{
+  //     res.json({ message:"error in file uploading "})
+  //  }
     
  
 })
