@@ -7,25 +7,38 @@ import axios from 'axios'
 const AddBook=({ }) => {
    const [name, setName] = useState('')
    const [author, setAuthor] = useState('')
-   const [imageUrl, setImageUrl] = useState('')
+   const [image, setImage] = useState('')
    const [pdfFile, setPdfFile] = useState([ ]);
    
    const navigate = useNavigate();
+   const handleImage = (e)=>{
+    const uploadedImage = e.target.files[0]
+    if(uploadedImage)
+    {
+        const reader = new FileReader()
+        reader.onload = ()=>{
+            const base64Image = reader.result;
+            setImage(base64Image)
+
+        }
+        reader.readAsDataURL(uploadedImage)
+    }
+   }
 
    // upload api
    const handleSubmit = async (e)=>{
     e.preventDefault()
+    console.log(image)
     const formData =  new FormData();
     formData.append('name',name);
     formData.append('author',author);
-    formData.append('image',imageUrl);
+    formData.append('image',image);
     formData.append("file",pdfFile);
     console.log(formData);
     const res = await axios.post('http://localhost:3001/book/add',formData,
     {
         headers:{"Content-Type": "multipart/form-data"},
     })
-    console.log(res)
     .then(res => { 
         if(res.status === 400) {
            toast.error("Please upload a file")  
@@ -55,9 +68,9 @@ const AddBook=({ }) => {
                 onChange={(e) => setAuthor(e.target.value)}/>
             </div>
             <div className="form-group">
-                <label htmlFor="image">Image URL:</label>
-                <input type="text" id="image" name="image" 
-                onChange={(e) => setImageUrl(e.target.value)} />
+                <label htmlFor="image">Image:</label>
+                <input type="file" id="image" accept="image/*" required
+                onChange={handleImage} />
             </div>
             <div className="form-group">
                 <label htmlFor="file">Content:</label>

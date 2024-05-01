@@ -12,8 +12,9 @@ const storage = multer.diskStorage({
       cb(null, '/Users/nagarajanrajan/Desktop/Capstone Project/NS BookStore/client/src/uploads')
     },
     filename: function (req, file, cb) {
+        console.log(file)
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null,   uniqueSuffix + '-' + file.originalname)
     }
   })
   const PdfSchema = mongoose.model("Book");
@@ -24,10 +25,10 @@ router.post('/add',upload.single("file"), verifyAdmin, async (req, res) =>{
     console.log(req.file)
     const name = req.body.name;
     const author = req.body.author;
-    const imageUrl = req.body.image;
+    const image = req.body.image;
     const pdfFile = req.file.filename;
     try{
-        await PdfSchema.create({ name: name, author: author,imageUrl: imageUrl , pdfFile: pdfFile });
+        await PdfSchema.create({ name: name, author: author,image: image , pdfFile: pdfFile });
         res.send({status: "ok"});
     } catch (error) {
         res.json({status:error})

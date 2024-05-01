@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const EditBook = () => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState('')
-    const [imageUrl, setImageUrl] = useState('')
+    const [image, setImage] = useState('')
     const [pdfFile, setPdfFile] = useState([ ])
     
     const navigate = useNavigate()
@@ -18,7 +18,7 @@ const EditBook = () => {
         .then(res => { 
             setName(res.data.name)
             setAuthor(res.data.author)
-            setImageUrl(res.data.imageUrl)
+            setImage(res.data.image)
             setPdfFile(res.data.pdfFile)
         })
         .catch(err => console.log(err))
@@ -26,7 +26,7 @@ const EditBook = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:3001/book/book/'+id, {name, author, imageUrl, pdfFile})
+        axios.put('http://localhost:3001/book/book/'+id, {name, author, image, pdfFile})
         .then(res => { 
             if(res.data.updated) {
                 navigate('/books')
@@ -53,9 +53,9 @@ const EditBook = () => {
           onChange={(e) => setAuthor(e.target.value)}/>
         </div>
         <div className="form-group">
-          <label htmlFor="image">Image URL:</label>
-          <input type="text" id="image" name="image" value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}/>
+          <label htmlFor="image">Image :</label>
+          <input type="text" id="image" name="image" value={image}
+          onChange={(e) => setImage(e.target.value)}/>
         </div>
         <div className="form-group">
              <label htmlFor="file">Content:</label>

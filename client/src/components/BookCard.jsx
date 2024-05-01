@@ -1,11 +1,12 @@
 import React  from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import ReadBook from './ReadBook';
 
  const BookCard =({book, role})=>{
   
-        const {name, author, imageUrl, pdfFile} = book;
-
+        const {name, author, image, pdfFile} = book;
+        const navigate = useNavigate();
         
        
   return (
@@ -13,7 +14,7 @@ import axios from 'axios';
     <div className="col mb-5">
    <div className="card h-100">
    <div className="badge bg-dark text-white position-absolute" style={{top:"0.5rem", right:"0.5rem"}}></div>
-   <img src={imageUrl} class="card-img-top" alt={name}/>
+   <img src={image} class="card-img-top" alt={name}/>
   
     <div class="card-body p-4">
             <h3 className="text-center">{name}</h3>
@@ -22,7 +23,7 @@ import axios from 'axios';
     <div className="text-center"></div>
             {role === "student" &&
         <div className="book-actions">
-            <button  className="btn btn-outline-dark mt-auto"  >Read </button>
+            <button  className="btn btn-outline-dark mt-auto" onClick={ ()=>{navigate('/readbook',{state:{pdfFile}})}} >Read</button>
             
             </div>}
         </div>

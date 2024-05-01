@@ -10,6 +10,7 @@ import AddStudent from './components/AddStudent.jsx';
 import AddBook from './components/AddBook.jsx';
 import EditBook from './components/EditBook.jsx';
 import DeleteBook from './components/DeleteBook.jsx';
+import ReadBook from './components/ReadBook.jsx';
 import axios from "axios"
 
 
@@ -42,6 +43,8 @@ function App() {
       <Route path='/addbook' element={<AddBook />}/>
       <Route path='/book/:id' element={<EditBook />}/>
       <Route path='/delete/:id' element={<DeleteBook />}/>
+      <Route path='/readbook' element={<ReadBook />}/>
+      
       
     </Routes>
     </BrowserRouter>
