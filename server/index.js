@@ -9,10 +9,13 @@ import { Student } from './models/Student.js'
 import { Admin } from './models/Admin.js'
 import { bookRouter } from './routes/book.js'
 import { Book } from './models/Book.js'
+import bodyParser from 'body-parser'
 
 
-
+//const bodyParser = require("body-parser");
 const app = express()
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
 
 
 

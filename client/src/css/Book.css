@@ -4,8 +4,7 @@ body{
 .book-list{
   display:flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  flex-basis: auto;
+  
 }
 
 .card {
@@ -31,4 +30,4 @@ body{
 }
 .btn {
   margin-right: 10px;
-}
+}?

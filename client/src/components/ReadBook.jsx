@@ -5,12 +5,11 @@ function ReadBook( ) {
   const location = useLocation();
   const {book} = location.state;
   return (
-   <div>
-   <iframe src =  {`../uploads/${book}`} 
-   width="600" height="800">
-
-    </iframe>
-   </div>
+    <div>
+      <object data={book} type="application/pdf" width="100%" height="900px">
+        <p>Sorry, your browser doesn't support embedded PDFs.</p>
+      </object>
+    </div>
   )
 }
 

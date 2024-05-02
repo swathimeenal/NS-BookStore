@@ -8,7 +8,7 @@ const AddBook=({ }) => {
    const [name, setName] = useState('')
    const [author, setAuthor] = useState('')
    const [image, setImage] = useState('')
-   const [pdfFile, setPdfFile] = useState([ ]);
+   const [pdfFile, setPdfFile] = useState('');
    
    const navigate = useNavigate();
    const handleImage = (e)=>{
@@ -18,21 +18,37 @@ const AddBook=({ }) => {
         const reader = new FileReader()
         reader.onload = ()=>{
             const base64Image = reader.result;
-            setImage(base64Image)
+            setImage(base64Image);
+            console.log(base64Image)
 
         }
         reader.readAsDataURL(uploadedImage)
     }
    }
+   const handlePdf = (e) => {
+    const uploadedPDF = e.target.files[0];
+
+    console.log("pdf - ", uploadedPDF);
+    if (uploadedPDF) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64PDF = reader.result;
+       // files.push({ sample: base64PDF });
+        setPdfFile(base64PDF);
+        console.log(base64PDF);
+      };
+      reader.readAsDataURL(uploadedPDF);
+    }
+  };
 
    // upload api
    const handleSubmit = async (e)=>{
     e.preventDefault()
-    console.log(image)
     const formData =  new FormData();
     formData.append('name',name);
     formData.append('author',author);
     formData.append('image',image);
+    formData.append("pdf",pdfFile);
     formData.append("file",pdfFile);
     console.log(formData);
     const res = await axios.post('http://localhost:3001/book/add',formData,
@@ -75,7 +91,7 @@ const AddBook=({ }) => {
             <div className="form-group">
                 <label htmlFor="file">Content:</label>
                 <input type="file" id="form-control" accept="application/pdf" required
-                onChange={(e) => setPdfFile(e.target.files[0])} />
+                onChange={handlePdf} />
             </div>
             <button type="submit">Add</button>
             
