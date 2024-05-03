@@ -47,6 +47,22 @@ router.post("/add",upload.single("file"), verifyAdmin, async (req, res) => {
   //     res.json({ message:"error in file uploading "})
   //  }
 });
+//
+router.get('/', (req,res)=>{
+  try {
+   console.log(req)
+  res.status(200).send(`
+  <h1><b>MERN STACK BOOK STORE APP</b></h1>
+  `)
+  } catch (error) {
+      console.log(error);
+      res.status(500).send({
+          message:error.message,
+          success:false
+      })
+  }
+})
+
 
 // Get All books
 router.get("/books", async (req, res) => {
