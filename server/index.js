@@ -30,6 +30,19 @@ app.use('/auth', AdminRouter)
 app.use('/student', studentRouter)
 app.use('/book', bookRouter)
 
+app.get('/',(req, res)=>{
+    try {
+        //const home = await Book.find();
+        console.log(req);
+         res.status(200).send(` <h1><b>MERN STACK BOOK STORE APP</b></h1>`);
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          success: false
+        });
+      } 
+})
+
 app.get('/dashboard', async (req, res) => {
     try {
         const student = await Student.countDocuments()

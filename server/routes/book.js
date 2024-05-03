@@ -54,20 +54,9 @@ router.post("/add", upload.single("file"), verifyAdmin, async (req, res) => {
   //     res.json({ message:"error in file uploading "})
   //  }
 });
-//
-// get Route
-router.get("/",  async(req, res) => {
-  try {
-    const home = await Book.find();
-    console.log(req);
-    res.status(200).send(` <h1><b>MERN STACK BOOK STORE APP</b></h1>`);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false
-    });
-  }
-});
+
+
+
 
 // Get All books
 
