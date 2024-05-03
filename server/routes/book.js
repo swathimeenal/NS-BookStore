@@ -25,18 +25,7 @@ const upload = multer({
   storage: storage,
   limits: { fieldSize: 10 * 1024 * 1024 },
 });
-// get Route
-router.get("/",  (req, res) => {
-  try {
-    console.log(req);
-    res.status(200).send(` <h1><b>MERN STACK BOOK STORE APP</b></h1>`);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false
-    });
-  }
-});
+
 
 // Route for Handling file uploads
 router.post("/add", upload.single("file"), verifyAdmin, async (req, res) => {
@@ -66,6 +55,19 @@ router.post("/add", upload.single("file"), verifyAdmin, async (req, res) => {
   //  }
 });
 //
+// get Route
+router.get("/",  async(req, res) => {
+  try {
+    const home = await Book.find();
+    console.log(req);
+    res.status(200).send(` <h1><b>MERN STACK BOOK STORE APP</b></h1>`);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false
+    });
+  }
+});
 
 // Get All books
 
