@@ -20,7 +20,6 @@ const AddBook=({ }) => {
             const base64Image = reader.result;
             setImage(base64Image);
             console.log(base64Image)
-
         }
         reader.readAsDataURL(uploadedImage)
     }
@@ -56,13 +55,20 @@ const AddBook=({ }) => {
         headers:{"Content-Type": "multipart/form-data"},
     })
     .then(res => { 
+        console.log(res);
+        if(res.status===200){
+            toast.success(res.data.message);
+            setTimeout(()=>{
+                navigate('/books')
+             },1000);
+        }
         if(res.status === 400) {
            toast.error("Please upload a file")  
         }
-        toast.success(res.data.message);
-       setTimeout(()=>{
-           navigate('/books')
-        },1000);
+        else{
+            toast.error(res.data.message)
+        }
+        
     })
     .catch(()=>{
         toast.error("Can't Upload");

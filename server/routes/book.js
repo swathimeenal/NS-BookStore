@@ -4,7 +4,7 @@ import { Book } from "../models/Book.js";
 import mongoose from "mongoose";
 const router = express.Router();
 import cors from "cors";
-import { verifyAdmin } from "./auth.js";
+//import { verifyAdmin } from "./auth.js";
 
 // multer setup
 const storage = multer.diskStorage({
@@ -28,7 +28,7 @@ const upload = multer({
 
 
 // Route for Handling file uploads
-router.post("/add", upload.single("file"), verifyAdmin, async (req, res) => {
+router.post("/add", upload.single("file"), async (req, res) => {
   const name = req.body.name;
   const author = req.body.author;
   const image = req.body.image;

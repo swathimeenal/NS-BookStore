@@ -49,22 +49,22 @@ catch(err)
     }
 })
 
-const verifyAdmin = (req, res, next) => {
-    const token = req.cookies.token;
-    if(!token) {
-        return res.json({message : "Invalid Admin"})
-    } else {
-        jwt.verify(token, process.env.Admin_Key, (err, decoded) => {
-            if(err) {
-                return res.json({message: "Invalid token"})
-            } else {
-                req.username = decoded.username;
-                req.role = decoded.role;
-                next()
-            }
-        })
-    }
-}
+// const verifyAdmin = (req, res, next) => {
+    // const token = req.cookies.token;
+    // console.log(token);
+    // if(!token) {
+    //     return res.json({message : "Invalid Admin"})
+    // } else {
+    //     jwt.verify(token, process.env.Admin_Key, (err, decoded) => {
+    //         if(err) {
+    //             return res.json({message: "Invalid token"})
+    //         } else {
+    //             req.username = decoded.username;
+    //             req.role = decoded.role;
+    //             next()
+    //         }
+    //     })
+    // }
 
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
@@ -101,4 +101,5 @@ router.get('/logout', (req, res) => {
     return res.json({logout : true})
 })
 
-export {router as AdminRouter, verifyAdmin}
+//export {router as AdminRouter, verifyAdmin}
+export {router as AdminRouter}
