@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [books, setBooks] = useState(0);
 
   useEffect(() => {
-    // axios.get('http://localhost:3001/dashboard')
+    // axios.get('https://ns-bookstore.onrender.com/dashboard')
     axiosInstance
       .get("/dashboard")
       .then((res) => {

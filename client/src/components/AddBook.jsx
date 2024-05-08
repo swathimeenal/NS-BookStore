@@ -50,7 +50,7 @@ const AddBook = ({}) => {
     formData.append("pdf", pdfFile);
     formData.append("file", pdfFile);
     console.log(formData);
-    // const res = await axios.post('http://localhost:3001/book/add',formData,
+    // const res = await axios.post('https://ns-bookstore.onrender.com/book/add',formData,
 
     await axiosInstance
       .post("/book/add", formData, {

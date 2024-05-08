@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 const PdfSchema = mongoose.model("Book");
 const upload = multer({
   storage: storage,
-  limits: { fieldSize: 10 * 1024 * 1024 },
+  limits: { fieldSize: 100 * 1024 * 1024 },
 });
 
 // Route for Handling file uploads
@@ -57,8 +57,24 @@ router.post("/add", verifyAdmin, upload.single("file"), async (req, res) => {
 
 router.get("/books", async (req, res) => {
   try {
-    const books = await Book.find();
+    const books = await Book.find({},{pdfFile:0});
     return res.json(books);
+  } catch (err) {
+    return res.json(err);
+  }
+});
+
+router.get("/pdf/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    console.log(id);
+    const book = await Book.findById(id, { pdfFile: 1 });
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    return res.json(book);
   } catch (err) {
     return res.json(err);
   }

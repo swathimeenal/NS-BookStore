@@ -12,7 +12,7 @@ const Books = ({ role }) => {
   useEffect(() => {
     setLoading(true);
 
-    // axios.get('http://localhost:3001/book/books')
+    // axios.get('https://ns-bookstore.onrender.com/book/books')
     axiosInstance
       .get("/book/books")
       .then((res) => {

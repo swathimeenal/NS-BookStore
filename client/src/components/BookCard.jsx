@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
  const BookCard =({book, role})=>{
   
-        const {name, author, image, pdfFile} = book;
+        const {_id, name, author, image} = book;
         const navigate = useNavigate();
         
        
@@ -29,7 +29,8 @@ import Button from "react-bootstrap/Button";
             className="mt-2"
             variant="primary"
             onClick={() => {
-              navigate("/readbook", { state: { book: pdfFile } });
+              console.log(_id)
+              navigate("/readbook", { state: { id: _id } });
             }}
           >
             Read

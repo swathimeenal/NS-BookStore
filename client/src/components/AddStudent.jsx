@@ -11,7 +11,7 @@ const AddStudent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // axios.post(`http://localhost:3001/student/register`,{roll, username, password, grade})
+    // axios.post(`https://ns-bookstore.onrender.com/student/register`,{roll, username, password, grade})
 
     axiosInstance
       .post(`/student/register`, { roll, username, password, grade })

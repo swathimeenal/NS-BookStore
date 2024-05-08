@@ -19,7 +19,7 @@ function App() {
 
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    // axios.get('http://localhost:3001/auth/verify')
+    // axios.get('https://ns-bookstore.onrender.com/auth/verify')
 
     axiosInstance
       .get("/auth/verify")
