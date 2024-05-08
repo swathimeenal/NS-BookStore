@@ -1,16 +1,22 @@
-import React, {useEffect} from 'react'
-import axios from 'axios'
-import { useNavigate} from 'react-router-dom'
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/AxiosInstance";
 
-const Logout = ({setRole}) => {
-    const navigate = useNavigate()
-  useEffect(()=>{
-    axios.get(`http://localhost:3001/auth/logout`)
-    .then(res => { if(res.data.logout){
-        setRole('')
-        navigate('/')
-    }}).catch(err => console.log(err))
-  }, [])
-}
+const Logout = ({ setRole }) => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    axiosInstance
+      .get(`/auth/logout`)
+      .then((res) => {
+        if (res.data.logout) {
+          localStorage.removeItem("token");
 
-export default Logout
+          setRole("");
+          navigate("/");
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+};
+
+export default Logout;
