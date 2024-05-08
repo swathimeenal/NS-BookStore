@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
 
 app.use(express.json())
 app.use(cors({
-    origin : ['http://localhost:5173'],
+    origin : ['http://localhost:5173', 'https://ns-bookstore-1.onrender.com'],
     credentials: true
 }))
 app.use(cookieParser())
